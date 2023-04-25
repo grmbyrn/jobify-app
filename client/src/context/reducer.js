@@ -1,4 +1,13 @@
-import {DISPLAY_ALERT, CLEAR_ALERT, SETUP_USER_BEGIN, SETUP_USER_ERROR, SETUP_USER_SUCCESS} from './actions'
+import {
+    DISPLAY_ALERT,
+    CLEAR_ALERT,
+    SETUP_USER_BEGIN,
+    SETUP_USER_ERROR,
+    SETUP_USER_SUCCESS,
+    TOGGLE_SIDEBAR,
+    LOGOUT_USER
+} from './actions'
+import { initialState } from './appContext'
 
 const reducer = (state, action) => {
     if(action.type === DISPLAY_ALERT){
@@ -40,6 +49,21 @@ const reducer = (state, action) => {
             showAlert: true,
             alertType: 'danger',
             alertText: action.payload.msg
+        }
+    }
+    if(action.type === TOGGLE_SIDEBAR){
+        return {
+            ...state,
+            showSidebar: !state.showSidebar
+        }
+    }
+    if(action.type === LOGOUT_USER){
+        return {
+            ...initialState,
+            user: null,
+            token: null,
+            userLocation: '',
+            jobLocation: ''
         }
     }
     throw new Error(`no such action: ${action.type}`)
