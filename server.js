@@ -12,10 +12,11 @@ import connectDB from './db/connect.js'
 import authRoutes from './routes/authRoutes.js'
 import jobsRoutes from './routes/jobsRoutes.js'
 
-
 // middleware
 import notFoundMiddleware from './middleware/not-found.js'
 import errorHandlerMiddleware from './middleware/error-handler.js'
+import authenticateUser from './middleware/auth.js'
+
 
 if(process.env.NODE_ENV !== 'production'){
     app.use(morgan('dev'))
@@ -31,7 +32,7 @@ app.get('/api/v1', (req, res) => {
 })
 
 app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/jobs', jobsRoutes)
+app.use('/api/v1/jobs', authenticateUser, jobsRoutes)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
